@@ -86,6 +86,19 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheExterior()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var exterior = vehicle.Exterior;
+
+            // Assert
+            exterior.Should().Be(new Exterior());
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
@@ -96,7 +109,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 new Make("make"), 
                 new Model("model"),
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act & Assert
             var exception = action.Should()
@@ -147,7 +161,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 new Make("make"), 
                 new Model("model"), 
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -155,7 +170,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 new Make("make"), 
                 new Model("model"),
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act
             var areEqual = v1 == v2;
@@ -174,7 +190,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018),
                 new Make("make"),
                 new Model("model"),
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -182,7 +199,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018),
                 new Make("make"),
                 new Model("model"),
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -201,7 +219,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 new Make("make"), 
                 new Model("model"), 
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -222,7 +241,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 null, 
                 new Make("make"), 
                 new Model("model"), 
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -243,7 +263,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 null, 
                 new Model("model"), 
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -264,7 +285,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018), 
                 new Make("make"), 
                 null, 
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -275,6 +297,50 @@ namespace Automagic.DomainModels.Vehicle.Tests
             exception.Child.Should().Be<Model>();
         }
 
+        [Fact]
+        public void WhenTrimNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"), 
+                null,
+                new Exterior());
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify a trim.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Trim>();
+        }
+
+        [Fact]
+        public void WhenExteriorNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"),
+                null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify an exterior object.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Exterior>();
+        }
+
         private static Vehicle CreateDefaultVehicle()
         {
             return Vehicle.Create(
@@ -283,7 +349,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Year(2018),
                 new Make("make"),
                 new Model("model"),
-                new Trim("trim"));
+                new Trim("trim"),
+                new Exterior());
         }
 
         private static Vehicle Create(
@@ -292,7 +359,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
             Year year,
             Make make,
             Model model,
-            Trim trim)
+            Trim trim,
+            Exterior exterior)
         {
             return Vehicle.Create(
                 id,
@@ -300,7 +368,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 year,
                 make,
                 model,
-                trim);
+                trim,
+                exterior);
         }
     }
 }

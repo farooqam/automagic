@@ -9,6 +9,7 @@ namespace Automagic.DomainModels.Vehicle
         public Make Make { get; }
         public Model Model { get; }
         public Trim Trim { get; }
+        public Exterior Exterior { get; }
 
         private Vehicle(
             VehicleId id,
@@ -16,19 +17,23 @@ namespace Automagic.DomainModels.Vehicle
             Year year, 
             Make make, 
             Model model,
-            Trim trim) : base(id)
+            Trim trim,
+            Exterior exterior) : base(id)
         {
             id.EnsureValueObject("Specify a vehicle id.", typeof(Vehicle), typeof(VehicleId));
             vin.EnsureValueObject("Specify a vin.", typeof(Vehicle), typeof(Vin));
             year.EnsureValueObject("Specify a year.", typeof(Vehicle), typeof(Year));
             make.EnsureValueObject("Specify a make.", typeof(Vehicle), typeof(Make));
             model.EnsureValueObject("Specify a model.", typeof(Vehicle), typeof(Model));
+            trim.EnsureValueObject("Specify a trim.", typeof(Vehicle), typeof(Trim));
+            exterior.EnsureValueObject("Specify an exterior object.", typeof(Vehicle), typeof(Exterior));
 
             Vin = vin;
             Year = year;
             Make = make;
             Model = model;
             Trim = trim;
+            Exterior = exterior;
         }
 
         protected override HashCode CalculateHashCode()
@@ -47,9 +52,10 @@ namespace Automagic.DomainModels.Vehicle
             Year year, 
             Make make, 
             Model model,
-            Trim trim)
+            Trim trim,
+            Exterior exterior)
         {
-            return new Vehicle(id, vin, year, make, model, trim);
+            return new Vehicle(id, vin, year, make, model, trim, exterior);
         }
     }
 }
