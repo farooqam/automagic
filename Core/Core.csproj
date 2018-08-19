@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Automagic.DomainModels.Core</AssemblyName>
+    <RootNamespace>Automagic.DomainModels.Core</RootNamespace>
+  </PropertyGroup>
+
+</Project>
