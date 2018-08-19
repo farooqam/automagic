@@ -60,11 +60,24 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheModel()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var model = vehicle.Model;
+
+            // Assert
+            model.Should().Be(new Model("model"));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
             // ReSharper disable once ObjectCreationAsStatement
-            Action action = () => Create(null, new Vin("vin"), new Year(2018), new Make("make"));
+            Action action = () => Create(null, new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
 
             // Act & Assert
             var exception = action.Should()
@@ -109,8 +122,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_AreNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
 
             // Act
             var areEqual = v1 == v2;
@@ -123,8 +136,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_WhenNotEqual_HashCodesNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -137,7 +150,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenVinNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), null, new Year(2018), new Make("make"));
+            Action action = () => Create(new VehicleId("id"), null, new Year(2018), new Make("make"), new Model("model"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -152,7 +165,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenYearNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null, new Make("make"));
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null, new Make("make"), new Model("model"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -167,7 +180,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenMakeNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), null);
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), null, new Model("model"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -178,26 +191,44 @@ namespace Automagic.DomainModels.Vehicle.Tests
             exception.Child.Should().Be<Make>();
         }
 
+        [Fact]
+        public void WhenModelNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), new Make("make"), null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify a model.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Model>();
+        }
+
         private static Vehicle CreateDefaultVehicle()
         {
             return Vehicle.Create(
                 new VehicleId("id"), 
                 new Vin("vin"),
                 new Year(2018),
-                new Make("make"));
+                new Make("make"),
+                new Model("model"));
         }
 
         private static Vehicle Create(
             VehicleId id,
             Vin vin, 
             Year year,
-            Make make)
+            Make make,
+            Model model)
         {
             return Vehicle.Create(
                 id,
                 vin,
                 year,
-                make);
+                make,
+                model);
         }
     }
 }
