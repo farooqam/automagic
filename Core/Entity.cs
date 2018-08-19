@@ -2,7 +2,7 @@
 
 namespace Automagic.DomainModels.Core
 {
-    public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : IComparable<TId>
+    public abstract class Entity<TId> : IEquatable<Entity<TId>>
     {
         protected abstract HashCode CalculateHashCode();
         protected abstract bool DoEqualityCheck(TId a, TId b);

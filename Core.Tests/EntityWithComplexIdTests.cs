@@ -91,11 +91,11 @@ namespace Automagic.DomainModels.Core.Tests
 
         protected override bool DoEqualityCheck(FakeId a, FakeId b)
         {
-            return a.CompareTo(b) == 0;
+            return a == b;
         }
     }
 
-    public class FakeId : IComparable<FakeId>
+    public class FakeId : ValueObject<FakeId>
     {
         public DateTime Value { get; }
 
@@ -103,15 +103,15 @@ namespace Automagic.DomainModels.Core.Tests
         {
             Value = value;
         }
-
-        public int CompareTo(FakeId other)
+        
+        protected override HashCode CalculateHashCode()
         {
-            return Value.CompareTo(other.Value);
+            return new HashCode(Value.GetHashCode());
         }
 
-        public override int GetHashCode()
+        protected override bool DoEqualityCheck(FakeId a, FakeId b)
         {
-            return Value.GetHashCode();
+            return a.Value == b.Value;
         }
     }
 }
