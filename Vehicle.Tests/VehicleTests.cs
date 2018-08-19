@@ -99,6 +99,19 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheInterior()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var interior = vehicle.Interior;
+
+            // Assert
+            interior.Should().Be(new Interior());
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
@@ -110,7 +123,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 new Model("model"),
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should()
@@ -162,7 +176,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 new Model("model"), 
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -171,7 +186,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 new Model("model"),
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act
             var areEqual = v1 == v2;
@@ -191,7 +207,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"),
                 new Model("model"),
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -200,7 +217,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"),
                 new Model("model"),
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -220,7 +238,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 new Model("model"), 
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -242,7 +261,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 new Model("model"), 
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -264,7 +284,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 null, 
                 new Model("model"), 
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -286,7 +307,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"), 
                 null, 
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -308,7 +330,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"),
                 new Model("model"), 
                 null,
-                new Exterior());
+                new Exterior(),
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -330,7 +353,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"),
                 new Model("model"),
                 new Trim("trim"),
-                null);
+                null,
+                new Interior());
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -339,6 +363,29 @@ namespace Automagic.DomainModels.Vehicle.Tests
 
             exception.Root.Should().Be<Vehicle>();
             exception.Child.Should().Be<Exterior>();
+        }
+
+        [Fact]
+        public void WhenInteriorNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"),
+                new Exterior(), 
+                null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify an interior object.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Interior>();
         }
 
         private static Vehicle CreateDefaultVehicle()
@@ -350,7 +397,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Make("make"),
                 new Model("model"),
                 new Trim("trim"),
-                new Exterior());
+                new Exterior(),
+                new Interior());
         }
 
         private static Vehicle Create(
@@ -360,7 +408,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
             Make make,
             Model model,
             Trim trim,
-            Exterior exterior)
+            Exterior exterior,
+            Interior interior)
         {
             return Vehicle.Create(
                 id,
@@ -369,7 +418,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 make,
                 model,
                 trim,
-                exterior);
+                exterior,
+                interior);
         }
     }
 }
