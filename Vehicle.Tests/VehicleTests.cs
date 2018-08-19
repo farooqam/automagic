@@ -34,11 +34,24 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheYear()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var year = vehicle.Year;
+
+            // Assert
+            year.Should().Be(new Year(2018));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
             // ReSharper disable once ObjectCreationAsStatement
-            Action action = () => Create(null, new Vin("vin"));
+            Action action = () => Create(null, new Vin("vin"), new Year(2018));
 
             // Act & Assert
             var exception = action.Should()
@@ -83,8 +96,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_AreNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018));
 
             // Act
             var areEqual = v1 == v2;
@@ -97,8 +110,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_WhenNotEqual_HashCodesNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -111,7 +124,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenVinNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), null);
+            Action action = () => Create(new VehicleId("id"), null, new Year(2018));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -122,20 +135,38 @@ namespace Automagic.DomainModels.Vehicle.Tests
             exception.Child.Should().Be<Vin>();
         }
 
+        [Fact]
+        public void WhenYearNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify a year.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Year>();
+        }
+
         private static Vehicle CreateDefaultVehicle()
         {
             return Vehicle.Create(
                 new VehicleId("id"), 
-                new Vin("vin"));
+                new Vin("vin"),
+                new Year(2018));
         }
 
         private static Vehicle Create(
             VehicleId id,
-            Vin vin)
+            Vin vin, 
+            Year year)
         {
             return Vehicle.Create(
                 id,
-                vin);
+                vin,
+                year);
         }
     }
 }

@@ -13,5 +13,17 @@ namespace Automagic.DomainModels.Core
         {
             if(valueObject == null) throw new DomainModelException(root, child, messageWhenNotEnsured);
         }
+
+        public static void EnsureValueWithinRange<T>(
+            this T value,
+            T minInclusive, 
+            T maxInclusive, 
+            string messageWhenNotEnsured,
+            Type root, 
+            Type child) where T : IComparable<T>
+        {
+           if(value.CompareTo(minInclusive) < 0) throw new DomainModelException(root, child, messageWhenNotEnsured);
+           if(value.CompareTo(maxInclusive) > 0) throw new DomainModelException(root, child, messageWhenNotEnsured);
+        }
     }
 }
