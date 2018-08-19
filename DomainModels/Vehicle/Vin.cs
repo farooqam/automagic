@@ -3,7 +3,7 @@ using Automagic.DomainModels.Core;
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class Vin : ValueObject<Vin>
+    public sealed class Vin : ValueObject<Vin>
     {
         public string Value { get; }
 

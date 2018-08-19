@@ -3,7 +3,7 @@ using Automagic.DomainModels.Core;
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class VehicleId : ValueObject<VehicleId>, IComparable<VehicleId>
+    public sealed class VehicleId : ValueObject<VehicleId>, IComparable<VehicleId>
     {
         public string Value { get; }
 
