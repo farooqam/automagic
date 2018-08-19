@@ -6,15 +6,18 @@ namespace Automagic.DomainModels.Vehicle
     {
         public Vin Vin { get; }
         public Year Year { get; }
+        public Make Make { get; }
 
-        private Vehicle(VehicleId id, Vin vin, Year year) : base(id)
+        private Vehicle(VehicleId id, Vin vin, Year year, Make make) : base(id)
         {
             id.EnsureValueObject("Specify a vehicle id.", typeof(Vehicle), typeof(VehicleId));
             vin.EnsureValueObject("Specify a vin.", typeof(Vehicle), typeof(Vin));
             year.EnsureValueObject("Specify a year.", typeof(Vehicle), typeof(Year));
+            make.EnsureValueObject("Specify a make.", typeof(Vehicle), typeof(Make));
 
             Vin = vin;
             Year = year;
+            Make = make;
         }
 
         protected override HashCode CalculateHashCode()
@@ -27,9 +30,9 @@ namespace Automagic.DomainModels.Vehicle
             return a == b;
         }
 
-        public static Vehicle Create(VehicleId id, Vin vin, Year year)
+        public static Vehicle Create(VehicleId id, Vin vin, Year year, Make make)
         {
-            return new Vehicle(id, vin, year);
+            return new Vehicle(id, vin, year, make);
         }
     }
 }

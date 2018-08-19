@@ -47,11 +47,24 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheMake()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var make = vehicle.Make;
+
+            // Assert
+            make.Should().Be(new Make("make"));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
             // ReSharper disable once ObjectCreationAsStatement
-            Action action = () => Create(null, new Vin("vin"), new Year(2018));
+            Action action = () => Create(null, new Vin("vin"), new Year(2018), new Make("make"));
 
             // Act & Assert
             var exception = action.Should()
@@ -96,8 +109,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_AreNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"));
 
             // Act
             var areEqual = v1 == v2;
@@ -110,8 +123,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_WhenNotEqual_HashCodesNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018));
+            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"));
+            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -124,7 +137,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenVinNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), null, new Year(2018));
+            Action action = () => Create(new VehicleId("id"), null, new Year(2018), new Make("make"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -139,7 +152,7 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenYearNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null);
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null, new Make("make"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -150,23 +163,41 @@ namespace Automagic.DomainModels.Vehicle.Tests
             exception.Child.Should().Be<Year>();
         }
 
+        [Fact]
+        public void WhenMakeNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify a make.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Make>();
+        }
+
         private static Vehicle CreateDefaultVehicle()
         {
             return Vehicle.Create(
                 new VehicleId("id"), 
                 new Vin("vin"),
-                new Year(2018));
+                new Year(2018),
+                new Make("make"));
         }
 
         private static Vehicle Create(
             VehicleId id,
             Vin vin, 
-            Year year)
+            Year year,
+            Make make)
         {
             return Vehicle.Create(
                 id,
                 vin,
-                year);
+                year,
+                make);
         }
     }
 }
