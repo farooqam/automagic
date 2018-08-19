@@ -1,6 +1,6 @@
 ﻿namespace Automagic.DomainModels.Core
 {
-    public class HashCode
+    public sealed class HashCode
     {
         public int Value { get; }
 
