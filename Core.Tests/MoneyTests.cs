@@ -51,6 +51,62 @@ namespace Automagic.DomainModels.Core.Tests
             exception.Root.Should().Be<Money>();
             exception.Child.Should().Be<Currency>();
         }
+
+        [Fact]
+        public void Monies_AreEqual()
+        {
+            // Arrange
+            var m1 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+            var m2 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+
+            // Act
+            var areEqual = m1 == m2;
+
+            // Assert
+            areEqual.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Monies_WhenEqual_HaveEqualHashCodes()
+        {
+            // Arrange
+            var m1 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+            var m2 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+
+            // Act
+            var hashCodesEqual = m1.GetHashCode() == m2.GetHashCode();
+
+            // Assert
+            hashCodesEqual.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Monies_AreNotEqual()
+        {
+            // Arrange
+            var m1 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+            var m2 = new FakeMoney(101m, Currencies.UnitedStatesDollar);
+
+            // Act
+            var areEqual = m1 == m2;
+
+            // Assert
+            areEqual.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Monies_WhenNotEqual_HashCodesNotEqual()
+        {
+            // Arrange
+            var m1 = new FakeMoney(100m, Currencies.UnitedStatesDollar);
+            var m2 = new FakeMoney(101m, Currencies.UnitedStatesDollar);
+
+            // Act
+            var hashCodesEqual = m1.GetHashCode() == m2.GetHashCode();
+
+            // Assert
+            hashCodesEqual.Should().BeFalse();
+        }
     }
 
     public class FakeMoney: Money

@@ -112,6 +112,19 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetThePrice()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var price = vehicle.Price;
+
+            // Assert
+            price.Should().Be(new Price(10000m, Currencies.UnitedStatesDollar));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
@@ -124,7 +137,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should()
@@ -177,7 +191,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"), 
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -187,7 +202,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act
             var areEqual = v1 == v2;
@@ -208,7 +224,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -218,7 +235,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -239,7 +257,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"), 
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -262,7 +281,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"), 
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -285,7 +305,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"), 
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -308,7 +329,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 null, 
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -331,7 +353,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"), 
                 null,
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -354,7 +377,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 null,
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -377,7 +401,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(), 
-                null);
+                null,
+                new Price(10000m, Currencies.UnitedStatesDollar));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -386,6 +411,30 @@ namespace Automagic.DomainModels.Vehicle.Tests
 
             exception.Root.Should().Be<Vehicle>();
             exception.Child.Should().Be<Interior>();
+        }
+
+        [Fact]
+        public void WhenPriceNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"),
+                new Exterior(),
+                new Interior(), 
+                null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify a price.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Price>();
         }
 
         private static Vehicle CreateDefaultVehicle()
@@ -398,7 +447,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Model("model"),
                 new Trim("trim"),
                 new Exterior(),
-                new Interior());
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar));
         }
 
         private static Vehicle Create(
@@ -409,7 +459,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
             Model model,
             Trim trim,
             Exterior exterior,
-            Interior interior)
+            Interior interior,
+            Price price)
         {
             return Vehicle.Create(
                 id,
@@ -419,7 +470,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 model,
                 trim,
                 exterior,
-                interior);
+                interior,
+                price);
         }
     }
 }

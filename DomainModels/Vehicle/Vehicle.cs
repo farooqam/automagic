@@ -11,6 +11,7 @@ namespace Automagic.DomainModels.Vehicle
         public Trim Trim { get; }
         public Exterior Exterior { get; }
         public Interior Interior { get; }
+        public Price Price { get; }
 
         private Vehicle(
             VehicleId id,
@@ -20,7 +21,8 @@ namespace Automagic.DomainModels.Vehicle
             Model model,
             Trim trim,
             Exterior exterior,
-            Interior interior) : base(id)
+            Interior interior,
+            Price price) : base(id)
         {
             id.EnsureValueObject("Specify a vehicle id.", typeof(Vehicle), typeof(VehicleId));
             vin.EnsureValueObject("Specify a vin.", typeof(Vehicle), typeof(Vin));
@@ -30,6 +32,7 @@ namespace Automagic.DomainModels.Vehicle
             trim.EnsureValueObject("Specify a trim.", typeof(Vehicle), typeof(Trim));
             exterior.EnsureValueObject("Specify an exterior object.", typeof(Vehicle), typeof(Exterior));
             interior.EnsureValueObject("Specify an interior object.", typeof(Vehicle), typeof(Interior));
+            price.EnsureValueObject("Specify a price.", typeof(Vehicle), typeof(Price));
 
             Vin = vin;
             Year = year;
@@ -38,6 +41,7 @@ namespace Automagic.DomainModels.Vehicle
             Trim = trim;
             Exterior = exterior;
             Interior = interior;
+            Price = price;
         }
 
         protected override HashCode CalculateHashCode()
@@ -58,9 +62,10 @@ namespace Automagic.DomainModels.Vehicle
             Model model,
             Trim trim,
             Exterior exterior,
-            Interior interior)
+            Interior interior,
+            Price price)
         {
-            return new Vehicle(id, vin, year, make, model, trim, exterior, interior);
+            return new Vehicle(id, vin, year, make, model, trim, exterior, interior, price);
         }
     }
 }
