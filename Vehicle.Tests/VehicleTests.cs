@@ -73,11 +73,30 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheTrim()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var trim = vehicle.Trim;
+
+            // Assert
+            trim.Should().Be(new Trim("trim"));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
             // ReSharper disable once ObjectCreationAsStatement
-            Action action = () => Create(null, new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
+            Action action = () => Create(
+                null, 
+                new Vin("vin"),
+                new Year(2018), 
+                new Make("make"), 
+                new Model("model"),
+                new Trim("trim"));
 
             // Act & Assert
             var exception = action.Should()
@@ -122,8 +141,21 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_AreNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
+            var v1 = Create(
+                new VehicleId("foo"), 
+                new Vin("vin"), 
+                new Year(2018), 
+                new Make("make"), 
+                new Model("model"), 
+                new Trim("trim"));
+
+            var v2 = Create(
+                new VehicleId("bar"),
+                new Vin("vin"), 
+                new Year(2018), 
+                new Make("make"), 
+                new Model("model"),
+                new Trim("trim"));
 
             // Act
             var areEqual = v1 == v2;
@@ -136,8 +168,21 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void Vehicles_WhenNotEqual_HashCodesNotEqual()
         {
             // Arrange
-            var v1 = Create(new VehicleId("foo"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
-            var v2 = Create(new VehicleId("bar"), new Vin("vin"), new Year(2018), new Make("make"), new Model("model"));
+            var v1 = Create(
+                new VehicleId("foo"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"));
+
+            var v2 = Create(
+                new VehicleId("bar"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -150,7 +195,13 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenVinNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), null, new Year(2018), new Make("make"), new Model("model"));
+            Action action = () => Create(
+                new VehicleId("id"), 
+                null, 
+                new Year(2018), 
+                new Make("make"), 
+                new Model("model"), 
+                new Trim("trim"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -165,7 +216,13 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenYearNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), null, new Make("make"), new Model("model"));
+            Action action = () => Create(
+                new VehicleId("id"), 
+                new Vin("vin"), 
+                null, 
+                new Make("make"), 
+                new Model("model"), 
+                new Trim("trim"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -180,7 +237,13 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenMakeNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), null, new Model("model"));
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"), 
+                new Year(2018), 
+                null, 
+                new Model("model"), 
+                new Trim("trim"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -195,7 +258,13 @@ namespace Automagic.DomainModels.Vehicle.Tests
         public void WhenModelNotSpecified_ThrowException()
         {
             // Arrange
-            Action action = () => Create(new VehicleId("id"), new Vin("vin"), new Year(2018), new Make("make"), null);
+            Action action = () => Create(
+                new VehicleId("id"), 
+                new Vin("vin"), 
+                new Year(2018), 
+                new Make("make"), 
+                null, 
+                new Trim("trim"));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -213,7 +282,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Vin("vin"),
                 new Year(2018),
                 new Make("make"),
-                new Model("model"));
+                new Model("model"),
+                new Trim("trim"));
         }
 
         private static Vehicle Create(
@@ -221,14 +291,16 @@ namespace Automagic.DomainModels.Vehicle.Tests
             Vin vin, 
             Year year,
             Make make,
-            Model model)
+            Model model,
+            Trim trim)
         {
             return Vehicle.Create(
                 id,
                 vin,
                 year,
                 make,
-                model);
+                model,
+                trim);
         }
     }
 }
