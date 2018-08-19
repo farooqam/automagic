@@ -21,6 +21,19 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheVin()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var vin = vehicle.Vin;
+
+            // Assert
+            vin.Should().Be(new Vin("vin"));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
