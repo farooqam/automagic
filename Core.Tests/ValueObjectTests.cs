@@ -82,14 +82,11 @@ namespace Automagic.DomainModels.Core.Tests
             return new HashCode(X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode());
         }
 
-        protected override bool DoEqualityCheck(ValueObject<FakeValueObject> a, ValueObject<FakeValueObject> b)
+        protected override bool DoEqualityCheck(FakeValueObject a, FakeValueObject b)
         {
-            var avo = (FakeValueObject) a;
-            var avb = (FakeValueObject) b;
-
-            return avo.X == avb.X &&
-                   avo.Y == avb.Y &&
-                   avo.Z == avb.Z;
+            return a.X == b.X &&
+                   a.Y == b.Y &&
+                   a.Z == b.Z;
         }
     }
 }

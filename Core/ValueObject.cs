@@ -3,7 +3,7 @@
     public abstract class ValueObject<T> where T : class 
     {
         protected abstract HashCode CalculateHashCode();
-        protected abstract bool DoEqualityCheck(ValueObject<T> a, ValueObject<T> b);
+        protected abstract bool DoEqualityCheck(T a, T b);
 
         public override int GetHashCode()
         {
@@ -22,7 +22,11 @@
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return DoEqualityCheck(this, other);
+
+            var valueObject = other as T;
+            if (valueObject == null) return false;
+
+            return DoEqualityCheck(this as T, valueObject);
         }
 
         public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
