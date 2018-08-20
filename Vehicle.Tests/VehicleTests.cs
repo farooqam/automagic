@@ -125,6 +125,19 @@ namespace Automagic.DomainModels.Vehicle.Tests
         }
 
         [Fact]
+        public void GetTheOdometer()
+        {
+            // Arrange
+            var vehicle = CreateDefaultVehicle();
+
+            // Act
+            var odometer = vehicle.Odometer;
+
+            // Assert
+            odometer.Should().Be(new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
+        }
+
+        [Fact]
         public void WhenVehicleIdNotSpecified_ThrowException()
         {
             // Arrange
@@ -138,7 +151,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should()
@@ -192,7 +206,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -203,7 +218,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act
             var areEqual = v1 == v2;
@@ -225,7 +241,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             var v2 = Create(
                 new VehicleId("bar"),
@@ -236,7 +253,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act
             var hashCodesEqual = v1.GetHashCode() == v2.GetHashCode();
@@ -258,7 +276,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -282,7 +301,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -306,7 +326,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -330,7 +351,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -354,7 +376,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 null,
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -378,7 +401,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 null,
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -402,7 +426,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(), 
                 null,
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -426,7 +451,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(), 
-                null);
+                null,
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -435,6 +461,31 @@ namespace Automagic.DomainModels.Vehicle.Tests
 
             exception.Root.Should().Be<Vehicle>();
             exception.Child.Should().Be<Price>();
+        }
+
+        [Fact]
+        public void WhenOdometerNotSpecified_ThrowException()
+        {
+            // Arrange
+            Action action = () => Create(
+                new VehicleId("id"),
+                new Vin("vin"),
+                new Year(2018),
+                new Make("make"),
+                new Model("model"),
+                new Trim("trim"),
+                new Exterior(),
+                new Interior(),
+                new Price(10000m, Currencies.UnitedStatesDollar), 
+                null);
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage("Specify an odometer object.")
+                .Which;
+
+            exception.Root.Should().Be<Vehicle>();
+            exception.Child.Should().Be<Odometer>();
         }
 
         private static Vehicle CreateDefaultVehicle()
@@ -448,7 +499,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 new Trim("trim"),
                 new Exterior(),
                 new Interior(),
-                new Price(10000m, Currencies.UnitedStatesDollar));
+                new Price(10000m, Currencies.UnitedStatesDollar),
+                new Odometer(new MilesMeasurement(1000.5m, Units.Miles)));
         }
 
         private static Vehicle Create(
@@ -460,7 +512,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
             Trim trim,
             Exterior exterior,
             Interior interior,
-            Price price)
+            Price price,
+            Odometer odometer)
         {
             return Vehicle.Create(
                 id,
@@ -471,7 +524,8 @@ namespace Automagic.DomainModels.Vehicle.Tests
                 trim,
                 exterior,
                 interior,
-                price);
+                price,
+                odometer);
         }
     }
 }
