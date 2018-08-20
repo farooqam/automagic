@@ -6,6 +6,7 @@ namespace Automagic.DomainModels.Vehicle
     {
         public Make(string value) : base(value)
         {
+            //TODO: ensure value specified
         }
     }
 }
