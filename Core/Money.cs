@@ -21,6 +21,8 @@
 
         protected override HashCode CalculateHashCode()
         {
+            //TODO: refactor to Core.
+
             var hashCode = 385229220;
             hashCode = hashCode * -1521134295 + Amount.GetHashCode();
             hashCode = hashCode * -1521134295 + Currency.GetHashCode();
