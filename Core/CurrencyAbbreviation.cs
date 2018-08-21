@@ -4,7 +4,7 @@
     {
         public CurrencyAbbreviation(string value) : base(value)
         {
-            //TODO: ensure value specified
+            value.EnsureStringSpecified("Specify an abbreviation.", typeof(CurrencyAbbreviation));
         }
     }
 }
