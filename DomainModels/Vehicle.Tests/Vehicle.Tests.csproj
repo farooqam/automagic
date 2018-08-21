@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DomainModels\Vehicle\Vehicle.csproj" />
+    <ProjectReference Include="..\Vehicle\Vehicle.csproj" />
   </ItemGroup>
 
 </Project>
