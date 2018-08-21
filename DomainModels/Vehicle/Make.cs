@@ -6,7 +6,7 @@ namespace Automagic.DomainModels.Vehicle
     {
         public Make(string value) : base(value)
         {
-            //TODO: ensure value specified
+            value.EnsureStringSpecified("Specify a make.", typeof(Make));
         }
     }
 }
