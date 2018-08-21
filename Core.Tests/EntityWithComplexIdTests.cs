@@ -86,7 +86,7 @@ namespace Automagic.DomainModels.Core.Tests
 
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(Id.GetHashCode());
+            return new HashCodeBuilder().Add(Id).Build();
         }
 
         protected override bool DoEqualityCheck(FakeId a, FakeId b)
@@ -106,7 +106,7 @@ namespace Automagic.DomainModels.Core.Tests
         
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(Value.GetHashCode());
+            return new HashCodeBuilder().Add(Value).Build();
         }
 
         protected override bool DoEqualityCheck(FakeId a, FakeId b)

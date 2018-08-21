@@ -15,12 +15,7 @@
 
         protected override HashCode CalculateHashCode()
         {
-            //TODO: refactor to Core.
-            var hashCode = 385229220;
-            hashCode = hashCode * -1521134295 + Value.GetHashCode();
-            hashCode = hashCode * -1521134295 + Unit.GetHashCode();
-
-            return new HashCode(hashCode);
+            return new HashCodeBuilder().Add(Value).Add(Unit).Build();
         }
 
         protected override bool DoEqualityCheck(Measurement a, Measurement b)

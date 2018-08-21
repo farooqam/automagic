@@ -50,7 +50,7 @@ namespace Automagic.DomainModels.Vehicle
 
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(Id.GetHashCode());
+            return new HashCodeBuilder().Add(Id).Build();
         }
 
         protected override bool DoEqualityCheck(VehicleId a, VehicleId b)

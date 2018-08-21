@@ -79,7 +79,7 @@ namespace Automagic.DomainModels.Core.Tests
 
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode());
+            return new HashCodeBuilder().Add(X).Add(Y).Add(Z).Build();
         }
 
         protected override bool DoEqualityCheck(FakeValueObject a, FakeValueObject b)

@@ -15,7 +15,7 @@ namespace Automagic.DomainModels.Vehicle
 
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(Measurement.GetHashCode());
+            return new HashCodeBuilder().Add(Measurement).Build();
         }
 
         protected override bool DoEqualityCheck(Odometer a, Odometer b)

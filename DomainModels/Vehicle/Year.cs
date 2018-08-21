@@ -18,7 +18,7 @@ namespace Automagic.DomainModels.Vehicle
         }
         protected override HashCode CalculateHashCode()
         {
-            return new HashCode(Value.GetHashCode());
+            return new HashCodeBuilder().Add(Value).Build();
         }
 
         protected override bool DoEqualityCheck(Year a, Year b)
