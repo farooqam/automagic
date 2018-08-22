@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "Core.Tests\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehicle.Tests", "DomainModels\Vehicle.Tests\Vehicle.Tests.csproj", "{8B640E38-1A70-4408-B125-687B965F32DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{A1C07AD5-0FC2-4C2C-A2E5-92E73CA40C26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vehicle", "Vehicle", "{6C3D870B-6E3E-4E31-BF46-2BC51F479A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleCommand", "Apis\Vehicle\VehicleCommand\VehicleCommand.csproj", "{13480F6E-35C8-47DF-B43D-8D2512A6521B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,10 @@ Global
 		{8B640E38-1A70-4408-B125-687B965F32DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B640E38-1A70-4408-B125-687B965F32DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B640E38-1A70-4408-B125-687B965F32DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13480F6E-35C8-47DF-B43D-8D2512A6521B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13480F6E-35C8-47DF-B43D-8D2512A6521B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13480F6E-35C8-47DF-B43D-8D2512A6521B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13480F6E-35C8-47DF-B43D-8D2512A6521B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +52,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7B288CDE-6238-4A95-90A0-E1D4DE3E70E0} = {2A81BB52-60E9-4B17-B330-DE045F9BFE9C}
 		{8B640E38-1A70-4408-B125-687B965F32DC} = {2A81BB52-60E9-4B17-B330-DE045F9BFE9C}
+		{6C3D870B-6E3E-4E31-BF46-2BC51F479A92} = {A1C07AD5-0FC2-4C2C-A2E5-92E73CA40C26}
+		{13480F6E-35C8-47DF-B43D-8D2512A6521B} = {6C3D870B-6E3E-4E31-BF46-2BC51F479A92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {382C906E-3F2C-470A-B391-FBF70B6454A5}
