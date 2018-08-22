@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Automagic.Apis.Vehicle.VehicleCommand.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
@@ -15,7 +16,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
         [ProducesResponseType(typeof(AddVehicleResponse), (int)HttpStatusCode.Created)]
         public IActionResult AddVehicle(AddVehicleRequest request)
         {
-            throw new NotImplementedException();
+            return CreatedAtRoute("foo", new AddVehicleResponse());
         }
     }
 }
