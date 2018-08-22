@@ -21,6 +21,32 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         }
 
         [Fact]
+        public async Task Endpoints_UseReturnCorrectContentType()
+        {
+            // Arrange
+            var client = _factory.CreateClient();
+            var content = new ObjectContent<AddVehicleRequest>(
+                new AddVehicleRequest(),
+                new JsonMediaTypeFormatter
+                {
+                    SerializerSettings = new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }
+                });
+
+            // Act
+            var response = await client.PostAsync("api/v1.0/vehicle", content);
+
+            // Act
+
+            // Assert
+            response.EnsureSuccessStatusCode();
+            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
+
+        }
+
+        [Fact]
         public async Task AddVehicle_ReturnsSuccess()
         {
             // Arrange
