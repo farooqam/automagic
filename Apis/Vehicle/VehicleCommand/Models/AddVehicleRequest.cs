@@ -1,7 +1,9 @@
-﻿namespace Automagic.Apis.Vehicle.VehicleCommand.Models
+﻿using Automagic.Core.Api;
+
+namespace Automagic.Apis.Vehicle.VehicleCommand.Models
 {
-    public class AddVehicleRequest
+    public class AddVehicleRequest : IRequestModel 
     {
-        
+        public string VehicleId { get; set; }
     }
 }

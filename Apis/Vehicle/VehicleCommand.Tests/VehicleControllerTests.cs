@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
+using Automagic.Core.Api.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
@@ -11,88 +12,24 @@ using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 {
-    public class VehicleControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class VehicleControllerTests : ApiTestClassFixture<Startup>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
 
-        public VehicleControllerTests(WebApplicationFactory<Startup> factory)
+        public VehicleControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
-            _factory = factory;
         }
-
-        [Fact]
-        public async Task Endpoints_UseReturnCorrectContentType()
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-            var content = new ObjectContent<AddVehicleRequest>(
-                new AddVehicleRequest(),
-                new JsonMediaTypeFormatter
-                {
-                    SerializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }
-                });
-
-            // Act
-            var response = await client.PostAsync("api/v1.0/vehicle", content);
-
-            // Act
-
-            // Assert
-            response.EnsureSuccessStatusCode();
-            response.Content.Headers.ContentType.ToString().Should().Be("application/json; charset=utf-8");
-
-        }
-
-        [Fact]
-        public async Task AddVehicle_ReturnsSuccess()
-        {
-            // Arrange
-            var client = _factory.CreateClient();
-            var content = new ObjectContent<AddVehicleRequest>(
-                new AddVehicleRequest(), 
-                new JsonMediaTypeFormatter
-                {
-                    SerializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }
-                });
-
-            // Act
-            var response = await client.PostAsync("api/v1.0/vehicle", content);
-
-            // Assert
-            response.EnsureSuccessStatusCode();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
+        
         [Fact]
         public async Task AddVehicle_ReturnsResponseModel()
         {
-            // Arrange
-            var client = _factory.CreateClient();
-
-            var content = new ObjectContent<AddVehicleRequest>(
-                new AddVehicleRequest(),
-                new JsonMediaTypeFormatter
-                {
-                    SerializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }
-                });
-
+            
             var expectedVehicleId = "123";
 
             // Act
-            var response = await client.PostAsync("api/v1.0/vehicle", content);
+            var response = await EnsurePostAsync("api/v1.0/vehicle", new AddVehicleRequest {VehicleId = expectedVehicleId});
 
             // Assert
-            response.EnsureSuccessStatusCode();
-
+            
             var responseModel = await response.Content.ReadAsAsync<AddVehicleResponse>();
             responseModel.VehicleId.Should().Be(expectedVehicleId);
 

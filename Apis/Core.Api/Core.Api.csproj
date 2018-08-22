@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Automagic.Core.Api</AssemblyName>
+    <RootNamespace>Automagic.Core.Api</RootNamespace>
+  </PropertyGroup>
+
+</Project>

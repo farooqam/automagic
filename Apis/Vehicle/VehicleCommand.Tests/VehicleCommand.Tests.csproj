@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core.Api.Tests\Core.Api.Tests.csproj" />
     <ProjectReference Include="..\VehicleCommand\VehicleCommand.csproj" />
   </ItemGroup>
 
