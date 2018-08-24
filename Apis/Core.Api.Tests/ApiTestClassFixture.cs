@@ -13,7 +13,7 @@ namespace Automagic.Core.Api.Tests
     {
         protected WebApplicationFactory<TStartup> Factory { get; }
 
-        private static JsonMediaTypeFormatter _formatter = new JsonMediaTypeFormatter
+        private readonly JsonMediaTypeFormatter _formatter = new JsonMediaTypeFormatter
         {
             SerializerSettings = new JsonSerializerSettings
             {
