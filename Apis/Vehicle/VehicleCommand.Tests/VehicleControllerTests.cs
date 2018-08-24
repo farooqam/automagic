@@ -1,13 +1,9 @@
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
 using Automagic.Core.Api.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests

@@ -13,6 +13,15 @@ namespace Automagic.Core.Api.Tests
     {
         protected WebApplicationFactory<TStartup> Factory { get; }
 
+        private static JsonMediaTypeFormatter _formatter = new JsonMediaTypeFormatter
+        {
+            SerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            }
+        };
+
+
         public ApiTestClassFixture(WebApplicationFactory<TStartup> factory)
         {
             Factory = factory;
@@ -24,13 +33,7 @@ namespace Automagic.Core.Api.Tests
         {
             var content = new ObjectContent<TRequestObject>(
                 new TRequestObject(),
-                new JsonMediaTypeFormatter
-                {
-                    SerializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    }
-                });
+                _formatter);
 
             using (var client = Factory.CreateClient())
             {
