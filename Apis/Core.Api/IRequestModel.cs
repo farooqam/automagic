@@ -1,4 +1,4 @@
-﻿namespace Automagic.Core.Api
+﻿namespace Core.Api
 {
     public interface IRequestModel
     {

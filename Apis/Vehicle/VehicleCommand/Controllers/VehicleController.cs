@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
+using Core.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
@@ -13,14 +14,9 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
         [ProducesResponseType(typeof(AddVehicleResponse), (int)HttpStatusCode.OK)]
         public IActionResult AddVehicle([FromBody] AddVehicleRequest request)
         {
-            if (request == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Vin))
-            {
-                return BadRequest();
+                return BadRequest(ModelState.GetModelErrors());
             }
 
             return Ok(new AddVehicleResponse {VehicleId = "123"});

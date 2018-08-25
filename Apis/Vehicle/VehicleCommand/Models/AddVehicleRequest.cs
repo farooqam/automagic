@@ -1,4 +1,4 @@
-﻿using Automagic.Core.Api;
+﻿using Core.Api;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Models
 {
