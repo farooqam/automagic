@@ -14,7 +14,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         public VehicleControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
         {
         }
-        
+
         [Fact]
         public async Task AddVehicle_ReturnsResponseModel()
         {
@@ -23,8 +23,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 
             // Act and Assert
             await Post(
-                "api/v1.0/vehicle", 
-                new AddVehicleRequest {Vin = new Vin().Value}, 
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest(),
                 response =>
                 {
                     response.AssertStatusCode(HttpStatusCode.OK);
@@ -40,13 +40,10 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle", 
+                "api/v1.0/vehicle",
                 null as AddVehicleRequest,
-                null, 
-                response =>
-                {
-                    response.AssertErrorExists(string.Empty, "A non-empty request body is required.");
-                });
+                null,
+                response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); });
 
         }
 
@@ -57,15 +54,13 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         public async Task AddVehicle_WhenVinNotSpecified_ReturnsBadRequest(string vin)
         {
             // Arrange
-            
+
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle", 
-                new AddVehicleRequest {Vin = vin},
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 null,
-                response => {
-                    response.AssertErrorExists("Vin", "Specify a vin.");
-                });
+                response => { response.AssertErrorExists("Vin", "Specify a vin."); });
         }
 
         [Theory]
@@ -79,19 +74,19 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             // Act & Assert
             await Post(
                 "api/v1.0/vehicle",
-                new AddVehicleRequest { Vin = vin },
+                CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 null,
-                response => {
-                    response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length.");
-                });
+                response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); });
+        }
+
+        private static AddVehicleRequest CreateDefaultAddVehicleRequest()
+        {
+            return new AddVehicleRequest
+            {
+                // ReSharper disable once StringLiteralTypo
+                Vin = "123456789ABCDEFGH"
+            };
         }
 
     }
-
-    public class Vin
-    {
-        // ReSharper disable once StringLiteralTypo
-        public string Value { get; } = "123456789ABCDEFGH";
-    }
-
 }
