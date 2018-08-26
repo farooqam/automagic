@@ -31,7 +31,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                     response.AssertStatusCode(HttpStatusCode.OK);
                     var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
                     responseModel.VehicleId.Should().Be(expectedVehicleId);
-                });
+                },
+                AssertNotRun);
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 null as AddVehicleRequest,
-                response => true.Should().BeFalse(),
+                AssertNotRun,
                 response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); });
 
         }
@@ -60,7 +61,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
-                response => true.Should().BeFalse(),
+                AssertNotRun,
                 response => { response.AssertErrorExists("Vin", "Specify a vin."); });
         }
 
@@ -76,7 +77,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
-                response => true.Should().BeFalse(),
+                AssertNotRun,
                 response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); });
         }
 
@@ -89,7 +90,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear(1980),
-                response => true.Should().BeFalse(),
+                AssertNotRun,
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
         }
 
@@ -102,7 +103,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear((short)(DateTime.Today.Year + 2)),
-                response => true.Should().BeFalse(),
+                AssertNotRun,
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
         }
 
@@ -111,7 +112,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             return new AddVehicleRequest
             {
                 // ReSharper disable once StringLiteralTypo
-                Vin = "123456789ABCDEFGH"
+                Vin = "123456789ABCDEFGH",
+                Year = 2016
             };
         }
 

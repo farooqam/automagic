@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Core.Api;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -23,16 +24,18 @@ namespace Automagic.Core.Api.Tests
         };
 
 
-        public ApiTestClassFixture(WebApplicationFactory<TStartup> factory)
+        protected ApiTestClassFixture(WebApplicationFactory<TStartup> factory)
         {
             Factory = factory;
         }
 
-        public async Task Post<TRequestObject>(
+        protected Action<HttpResponseMessage> AssertNotRun = response => true.Should().BeFalse();
+
+        protected async Task Post<TRequestObject>(
             string uri,
             TRequestObject obj,
-            Action<HttpResponseMessage> onSuccess = null, 
-            Action<HttpResponseMessage> onError = null) where TRequestObject : IRequestModel, new()
+            Action<HttpResponseMessage> onSuccess, 
+            Action<HttpResponseMessage> onError) where TRequestObject : IRequestModel, new()
         {
             var content = new ObjectContent<TRequestObject>(
                 obj,
@@ -44,11 +47,11 @@ namespace Automagic.Core.Api.Tests
 
                 if (response.IsSuccessStatusCode)
                 {
-                    onSuccess?.Invoke(response);
+                    onSuccess.Invoke(response);
                 }
                 else
                 {
-                    onError?.Invoke(response);
+                    onError.Invoke(response);
                 }
             }
         }
