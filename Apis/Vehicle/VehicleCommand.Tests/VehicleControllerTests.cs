@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
@@ -42,7 +43,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 null as AddVehicleRequest,
-                null,
+                response => true.Should().BeFalse(),
                 response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); });
 
         }
@@ -59,7 +60,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
-                null,
+                response => true.Should().BeFalse(),
                 response => { response.AssertErrorExists("Vin", "Specify a vin."); });
         }
 
@@ -75,15 +76,14 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
-                null,
+                response => true.Should().BeFalse(),
                 response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); });
         }
 
         [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData("  ")]
-        public async Task AddVehicle_WhenYearNotSpecified_ReturnsBadRequest(string year)
+        [InlineData(1980)]
+        [InlineData(2020)]
+        public async Task AddVehicle_WhenYearNotInRange_ReturnsBadRequest(short year)
         {
             // Arrange
 
@@ -91,8 +91,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear(year),
-                null,
-                response => { response.AssertErrorExists("Year", "Specify a year."); });
+                response => true.Should().BeFalse(),
+                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
         }
 
         private static AddVehicleRequest CreateDefaultAddVehicleRequest()
