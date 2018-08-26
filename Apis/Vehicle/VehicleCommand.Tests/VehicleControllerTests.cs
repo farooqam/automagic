@@ -113,7 +113,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             {
                 // ReSharper disable once StringLiteralTypo
                 Vin = "123456789ABCDEFGH",
-                Year = 2016
+                Year = 2016,
+                Type = VehicleType.New
             };
         }
 
