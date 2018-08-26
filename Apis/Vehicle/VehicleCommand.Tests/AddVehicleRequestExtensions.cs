@@ -15,5 +15,11 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             request.Vin = vin;
             return request;
         }
+
+        public static AddVehicleRequest UpdateYear(this AddVehicleRequest request, short year)
+        {
+            request.Year = year;
+            return request;
+        }
     }
 }
