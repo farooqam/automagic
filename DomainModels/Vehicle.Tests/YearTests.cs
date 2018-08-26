@@ -76,14 +76,12 @@ namespace Automagic.DomainModels.Vehicle.Tests
             hashCodesEqual.Should().BeFalse();
         }
 
-        [Theory]
-        [InlineData(1899)]
-        [InlineData(2019)]
-        public void WhenYearOutOfRange_ThrowException(short value)
+        [Fact]
+        public void WhenYearTooLow_ThrowException()
         {
             // Arrange
             // ReSharper disable once ObjectCreationAsStatement
-            Action action = () => new Year(value);
+            Action action = () => new Year(1980);
 
             // Act & Assert
             var exception = action.Should().Throw<DomainModelException>()
@@ -94,6 +92,22 @@ namespace Automagic.DomainModels.Vehicle.Tests
             exception.Child.Should().BeNull();
 
 
+        }
+
+        [Fact]
+        public void WhenYearTooHigh_ThrowException()
+        {
+            // Arrange
+            // ReSharper disable once ObjectCreationAsStatement
+            Action action = () => new Year((short) (DateTime.Today.Year + 2));
+
+            // Act & Assert
+            var exception = action.Should().Throw<DomainModelException>()
+                .WithMessage($"Year must be between {Year.Min} and {Year.Max}.")
+                .Which;
+
+            exception.Root.Should().Be<Year>();
+            exception.Child.Should().BeNull();
         }
     }
 }

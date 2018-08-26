@@ -5,8 +5,8 @@ namespace Automagic.DomainModels.Vehicle
 {
     public class Year : ValueObject<Year>
     {
-        public static short Min => 1900;
-        public static short Max => (short)DateTime.Now.Year;
+        public static short Min => 1981;
+        public static short Max => (short)(DateTime.Now.Year + 1);
         public short Value { get; }
         
 

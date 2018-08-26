@@ -80,17 +80,28 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); });
         }
 
-        [Theory]
-        [InlineData(1980)]
-        [InlineData(2020)]
-        public async Task AddVehicle_WhenYearNotInRange_ReturnsBadRequest(short year)
+        [Fact]
+        public async Task AddVehicle_WhenYearTooLow_ReturnsBadRequest()
         {
             // Arrange
 
             // Act & Assert
             await Post(
                 "api/v1.0/vehicle",
-                CreateDefaultAddVehicleRequest().UpdateYear(year),
+                CreateDefaultAddVehicleRequest().UpdateYear(1980),
+                response => true.Should().BeFalse(),
+                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
+        }
+
+        [Fact]
+        public async Task AddVehicle_WhenYearTooHigh_ReturnsBadRequest()
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateYear((short)(DateTime.Today.Year + 2)),
                 response => true.Should().BeFalse(),
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
         }
