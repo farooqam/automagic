@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
 using Core.Api;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
         [Route("")]
         [HttpPost]
         [ProducesResponseType(typeof(AddVehicleResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(IEnumerable<ModelError>))]
         public IActionResult AddVehicle([FromBody] AddVehicleRequest request)
         {
             if (!ModelState.IsValid)
