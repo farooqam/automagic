@@ -107,6 +107,109 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
         }
 
+        [Fact]
+        public async Task AddVehicle_WhenTypeNotSpecified_ReturnsBadRequest()
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateType(VehicleType.NotSpecified),
+                AssertNotRun,
+                response => { response.AssertErrorExists("Type", "Specify the vehicle type."); });
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("  ")]
+        public async Task AddVehicle_WhenMakeNotSpecified_ReturnsBadRequest(string make)
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateMake(make),
+                AssertNotRun,
+                response => { response.AssertErrorExists("Make", "Specify a make."); });
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("  ")]
+        public async Task AddVehicle_WhenModelNotSpecified_ReturnsBadRequest(string model)
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateModel(model),
+                AssertNotRun,
+                response => { response.AssertErrorExists("Model", "Specify a model."); });
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("  ")]
+        public async Task AddVehicle_WhenTrimNotSpecified_ReturnsOk(string trim)
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateTrim(trim),
+                response => {response.AssertStatusCode(HttpStatusCode.OK);},
+                AssertNotRun);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task AddVehicle_WhenPriceOutOfRange_ReturnsBadRequest(decimal price)
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdatePrice(price),
+                AssertNotRun,
+                response => { response.AssertErrorExists("Price", "Price must be greater than zero."); });
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        public async Task AddVehicle_WhenOdometerOutOfRange_ReturnsBadRequest(decimal odometer)
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateOdometer(odometer),
+                AssertNotRun,
+                response => { response.AssertErrorExists("Odometer", "Odometer cannot be less than zero."); });
+        }
+
+        [Fact]
+        public async Task AddVehicle_WhenOdometerUnitNotSpecified_ReturnsBadRequest()
+        {
+            // Arrange
+
+            // Act & Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest().UpdateOdometerUnit(Unit.NotSpecified),
+                AssertNotRun,
+                response => { response.AssertErrorExists("OdometerUnit", "Specify the odometer unit."); });
+        }
+
         private static AddVehicleRequest CreateDefaultAddVehicleRequest()
         {
             return new AddVehicleRequest
@@ -114,7 +217,13 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 // ReSharper disable once StringLiteralTypo
                 Vin = "123456789ABCDEFGH",
                 Year = 2016,
-                Type = VehicleType.New
+                Type = VehicleType.New,
+                Make = "Ford",
+                Model = "Edge",
+                Trim = "Sport",
+                Price = 45995m,
+                Odometer = 0,
+                OdometerUnit = Unit.Miles
             };
         }
 
