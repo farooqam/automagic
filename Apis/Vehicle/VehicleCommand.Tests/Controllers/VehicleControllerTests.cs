@@ -42,6 +42,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
                 AssertNotRun,
                 services =>
                 {
+                    services.RemoveAll<IVehicleDataService>();
                     services.TryAddScoped(provider => dataServiceMock.Object);
                 });
         }

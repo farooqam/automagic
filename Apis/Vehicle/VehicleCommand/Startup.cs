@@ -27,6 +27,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation();
             services.TryAddScoped<IValidator<AddVehicleRequest>, AddVehicleRequestValidator>();
             services.TryAddScoped<IVehicleIdService, VehicleIdService>();
+            services.TryAddScoped<IVehicleDataService, FakeVehicleDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
