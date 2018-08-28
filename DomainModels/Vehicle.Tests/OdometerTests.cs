@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Vehicle.Tests
 {
-    public class OdometerTests
+    public sealed class OdometerTests
     {
         [Fact]
         public void GetTheMeasurement()

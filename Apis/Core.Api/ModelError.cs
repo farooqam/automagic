@@ -2,7 +2,7 @@
 
 namespace Core.Api
 {
-    public class ModelError : IEquatable<ModelError>
+    public sealed class ModelError : IEquatable<ModelError>
     {
         public string Key { get; }
         public string Message { get; }

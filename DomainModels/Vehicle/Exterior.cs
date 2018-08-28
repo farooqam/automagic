@@ -2,7 +2,7 @@
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class Exterior : ValueObject<Exterior>
+    public sealed class Exterior : ValueObject<Exterior>
     {
         public Color Color { get; }
 

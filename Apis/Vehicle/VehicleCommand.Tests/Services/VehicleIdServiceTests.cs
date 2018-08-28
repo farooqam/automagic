@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Services
 {
-    public class VehicleIdServiceTests
+    public sealed class VehicleIdServiceTests
     {
         [Fact]
         public async Task NewId_ReturnsAnId()

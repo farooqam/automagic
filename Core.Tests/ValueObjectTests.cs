@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class ValueObjectTests
+    public sealed class ValueObjectTests
     {
         [Fact]
         public void ValueObjects_AreEqual()

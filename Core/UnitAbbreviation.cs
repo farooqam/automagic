@@ -1,6 +1,6 @@
 ﻿namespace Automagic.DomainModels.Core
 {
-    public class UnitAbbreviation : Text 
+    public sealed class UnitAbbreviation : Text 
     {
         public UnitAbbreviation(string value) : base(value)
         {

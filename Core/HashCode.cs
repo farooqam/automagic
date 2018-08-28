@@ -10,7 +10,7 @@
         }
     }
 
-    public class HashCodeBuilder
+    public sealed class HashCodeBuilder
     {
         internal int Value { get; private set; }
 

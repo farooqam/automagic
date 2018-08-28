@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand
 {
-    public class Startup
+    public sealed class Startup
     {
         public Startup(IConfiguration configuration)
         {

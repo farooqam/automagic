@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class MilesMeasurementTests
+    public sealed class MilesMeasurementTests
     {
         [Fact]
         public void WhenValueNegative_ThrowException()

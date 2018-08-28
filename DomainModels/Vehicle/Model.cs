@@ -2,7 +2,7 @@
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class Model : Text
+    public sealed class Model : Text
     {
         public Model(string value) : base(value)
         {

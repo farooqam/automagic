@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class TextTests
+    public sealed class TextTests
     {
         [Fact]
         public void GetTheValue()

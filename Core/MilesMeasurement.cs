@@ -1,6 +1,6 @@
 ﻿namespace Automagic.DomainModels.Core
 {
-    public class MilesMeasurement : Measurement
+    public sealed class MilesMeasurement : Measurement
     {
         public MilesMeasurement(decimal value, Unit unit) : base(value, unit)
         {

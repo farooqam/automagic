@@ -2,7 +2,7 @@
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class Odometer : ValueObject<Odometer>
+    public sealed class Odometer : ValueObject<Odometer>
     {
         public Measurement Measurement { get; }
 

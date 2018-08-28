@@ -2,7 +2,7 @@
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Models
 {
-    public class AddVehicleRequest : IRequestModel 
+    public sealed class AddVehicleRequest : IRequestModel 
     {
         public VehicleType Type { get; set; }
         public string Vin { get; set; }

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class MoneyTests
+    public sealed class MoneyTests
     {
         [Fact]
         public void GetTheAmount()

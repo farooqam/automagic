@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Models.Validators
 {
-    public class AddVehicleRequestValidator : AbstractValidator<AddVehicleRequest>
+    public sealed class AddVehicleRequestValidator : AbstractValidator<AddVehicleRequest>
     {
         public AddVehicleRequestValidator()
         {

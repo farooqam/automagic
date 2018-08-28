@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Vehicle.Tests
 {
-    public class PriceTests
+    public sealed class PriceTests
     {
         [Fact]
         public void WhenPriceNegative_ThrowException()

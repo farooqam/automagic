@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Vehicle.Tests
 {
-    public class ModelTests
+    public sealed class ModelTests
     {
         [Theory]
         [InlineData(null)]

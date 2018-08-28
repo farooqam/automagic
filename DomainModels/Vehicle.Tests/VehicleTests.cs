@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Vehicle.Tests
 {
-    public class VehicleTests
+    public sealed class VehicleTests
     {
         [Fact]
         public void GetTheVehicleId()

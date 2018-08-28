@@ -3,7 +3,7 @@ using Automagic.DomainModels.Core;
 
 namespace Automagic.DomainModels.Vehicle
 {
-    public class Year : ValueObject<Year>
+    public sealed class Year : ValueObject<Year>
     {
         public static short Min => 1981;
         public static short Max => (short)(DateTime.Now.Year + 1);

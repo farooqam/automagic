@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class MeasurementTests
+    public sealed class MeasurementTests
     {
         [Fact]
         public void GetTheValue()

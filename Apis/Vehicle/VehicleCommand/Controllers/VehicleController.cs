@@ -10,7 +10,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
 {
     [Route("api/v1.0/vehicle")]
     [Produces("application/json")]
-    public class VehicleController : Controller
+    public sealed class VehicleController : Controller
     {
         private readonly IVehicleDataService _vehicleDataService;
         private readonly IVehicleIdService _vehicleIdService;

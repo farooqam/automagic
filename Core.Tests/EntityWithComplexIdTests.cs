@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class EntityWithComplexIdTests
+    public sealed class EntityWithComplexIdTests
     {
         [Fact]
         public void GetTheIdValue()

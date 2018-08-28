@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class CurrencyTests
+    public sealed class CurrencyTests
     {
         [Fact]
         public void GetTheAbbreviation()

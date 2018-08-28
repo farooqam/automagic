@@ -4,7 +4,7 @@ using Moq;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 {
-    public class MockVehicleDataService : Mock<IVehicleDataService>
+    public sealed class MockVehicleDataService : Mock<IVehicleDataService>
     {
         public MockVehicleDataService()
         {

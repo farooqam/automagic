@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Vehicle.Tests
 {
-    public class ExteriorTests
+    public sealed class ExteriorTests
     {
         [Fact]
         public void GetTheColor()

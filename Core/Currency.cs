@@ -20,7 +20,7 @@
         }
     }
 
-    public class Currencies
+    public sealed class Currencies
     {
         public static Currency UnitedStatesDollar = new Currency(new CurrencyAbbreviation("USD"));
     }

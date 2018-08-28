@@ -2,7 +2,7 @@
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Models
 {
-    public class AddVehicleResponse : IUniqueResource
+    public sealed class AddVehicleResponse : IUniqueResource
     {
         public string  VehicleId { get; set; }
 

@@ -12,7 +12,7 @@ using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 {
-    public class VehicleControllerTests : ApiTestClassFixture<Startup>
+    public sealed class VehicleControllerTests : ApiTestClassFixture<Startup>
     {
 
         public VehicleControllerTests(WebApplicationFactory<Startup> factory) : base(factory)

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Automagic.DomainModels.Core.Tests
 {
-    public class UnitAbbreviationTests
+    public sealed class UnitAbbreviationTests
     {
         [Theory]
         [InlineData(null)]
