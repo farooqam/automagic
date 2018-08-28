@@ -47,6 +47,33 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
         }
 
         [Fact]
+        public async Task AddVehicle_WhenSuccessful_HasSelfLinkInResponse()
+        {
+            // Arrange
+            var expectedVehicleId = "123";
+
+            var dataServiceMock = new Mock<IVehicleDataService>();
+            dataServiceMock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
+                .ReturnsAsync(new AddVehicleResponse { VehicleId = expectedVehicleId });
+
+            // Act and Assert
+            await Post(
+                "api/v1.0/vehicle",
+                CreateDefaultAddVehicleRequest(),
+                response =>
+                {
+                    response.AssertStatusCode(HttpStatusCode.OK);
+                    var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
+                    responseModel.SelfLink.Should().Be($"api/v1.0/vehicles/{responseModel.VehicleId}");
+                },
+                AssertNotRun,
+                services =>
+                {
+                    services.TryAddScoped(provider => dataServiceMock.Object);
+                });
+        }
+
+        [Fact]
         public async Task AddVehicle_WhenRequestNotSpecified_ReturnsBadRequest()
         {
             // Arrange
