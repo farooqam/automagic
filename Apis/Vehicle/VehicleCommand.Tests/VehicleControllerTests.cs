@@ -2,9 +2,12 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
+using Automagic.Apis.Vehicle.VehicleCommand.Services;
 using Automagic.Core.Api.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
 using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
@@ -22,6 +25,13 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
             // Arrange
             var expectedVehicleId = "123";
 
+            var dataServiceMock = new Mock<IVehicleDataService>();
+            dataServiceMock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
+                .ReturnsAsync(new AddVehicleResponse { VehicleId = "123" });
+
+            var idServiceMock = new Mock<IVehicleIdService>();
+            idServiceMock.Setup(m => m.NewId(It.IsAny<AddVehicleRequest>())).ReturnsAsync("id");
+
             // Act and Assert
             await Post(
                 "api/v1.0/vehicle",
@@ -32,7 +42,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                     var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
                     responseModel.VehicleId.Should().Be(expectedVehicleId);
                 },
-                AssertNotRun);
+                AssertNotRun,
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => dataServiceMock.Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => idServiceMock.Object);
+                });
         }
 
         [Fact]
@@ -45,7 +60,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 null as AddVehicleRequest,
                 AssertNotRun,
-                response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); });
+                response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
 
         }
 
@@ -62,7 +82,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Vin", "Specify a vin."); });
+                response => { response.AssertErrorExists("Vin", "Specify a vin."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -78,7 +103,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); });
+                response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Fact]
@@ -91,7 +121,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear(1980),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
+                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Fact]
@@ -104,7 +139,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear((short)(DateTime.Today.Year + 2)),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); });
+                response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Fact]
@@ -117,7 +157,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateType(VehicleType.NotSpecified),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Type", "Specify the vehicle type."); });
+                response => { response.AssertErrorExists("Type", "Specify the vehicle type."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -133,7 +178,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateMake(make),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Make", "Specify a make."); });
+                response => { response.AssertErrorExists("Make", "Specify a make."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -149,7 +199,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateModel(model),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Model", "Specify a model."); });
+                response => { response.AssertErrorExists("Model", "Specify a model."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -159,13 +214,18 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         public async Task AddVehicle_WhenTrimNotSpecified_ReturnsOk(string trim)
         {
             // Arrange
-
+            
             // Act & Assert
             await Post(
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateTrim(trim),
                 response => {response.AssertStatusCode(HttpStatusCode.OK);},
-                AssertNotRun);
+                AssertNotRun,
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -180,7 +240,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdatePrice(price),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Price", "Price must be greater than zero."); });
+                response => { response.AssertErrorExists("Price", "Price must be greater than zero."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Theory]
@@ -194,7 +259,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateOdometer(odometer),
                 AssertNotRun,
-                response => { response.AssertErrorExists("Odometer", "Odometer cannot be less than zero."); });
+                response => { response.AssertErrorExists("Odometer", "Odometer cannot be less than zero."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         [Fact]
@@ -207,7 +277,12 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
                 "api/v1.0/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateOdometerUnit(Unit.NotSpecified),
                 AssertNotRun,
-                response => { response.AssertErrorExists("OdometerUnit", "Specify the odometer unit."); });
+                response => { response.AssertErrorExists("OdometerUnit", "Specify the odometer unit."); },
+                services =>
+                {
+                    services.TryAddScoped<IVehicleDataService>(provider => new MockVehicleDataService().Object);
+                    services.TryAddScoped<IVehicleIdService>(provider => new MockVehicleIdService().Object);
+                });
         }
 
         private static AddVehicleRequest CreateDefaultAddVehicleRequest()

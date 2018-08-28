@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Core.Api;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Xunit;
@@ -31,17 +33,27 @@ namespace Automagic.Core.Api.Tests
 
         protected Action<HttpResponseMessage> AssertNotRun = response => true.Should().BeFalse();
 
-        protected async Task Post<TRequestObject>(
-            string uri,
+        protected async Task Post<TRequestObject>(string uri,
             TRequestObject obj,
-            Action<HttpResponseMessage> onSuccess, 
-            Action<HttpResponseMessage> onError) where TRequestObject : IRequestModel, new()
+            Action<HttpResponseMessage> onSuccess,
+            Action<HttpResponseMessage> onError,
+            Action<IServiceCollection> services = null) where TRequestObject : IRequestModel, new()
         {
+            var client = Factory.WithWebHostBuilder(builder =>
+                {
+                    if (services != null)
+                    {
+                        builder.ConfigureTestServices(services);
+                    }
+                })
+                .CreateClient();
+
+
             var content = new ObjectContent<TRequestObject>(
                 obj,
                 _formatter);
 
-            using (var client = Factory.CreateClient())
+            using (client)
             {
                 var response = await client.PostAsync(uri, content);
 
