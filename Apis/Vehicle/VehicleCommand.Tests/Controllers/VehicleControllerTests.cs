@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
 using Xunit;
 
-namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
+namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 {
     public class VehicleControllerTests : ApiTestClassFixture<Startup>
     {
