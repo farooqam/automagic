@@ -1,5 +1,6 @@
 ﻿using Automagic.Apis.Vehicle.VehicleCommand.Models;
 using Automagic.Apis.Vehicle.VehicleCommand.Models.Validators;
+using Automagic.Apis.Vehicle.VehicleCommand.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +25,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddFluentValidation();
-            services.TryAddSingleton<IValidator<AddVehicleRequest>, AddVehicleRequestValidator>();
+            services.TryAddScoped<IValidator<AddVehicleRequest>, AddVehicleRequestValidator>();
+            services.TryAddScoped<IVehicleIdService, VehicleIdService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,13 +13,4 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         }
     }
 
-    public class MockVehicleIdService : Mock<IVehicleIdService>
-    {
-        public MockVehicleIdService()
-        {
-            Setup(m => m.NewId(It.IsAny<AddVehicleRequest>()))
-                .ReturnsAsync(string.Empty);
-        }
-    }
-
 }
