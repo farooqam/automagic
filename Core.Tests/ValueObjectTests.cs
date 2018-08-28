@@ -62,7 +62,7 @@ namespace Automagic.DomainModels.Core.Tests
         }
     }
 
-    public class FakeValueObject : ValueObject<FakeValueObject>
+    public sealed class FakeValueObject : ValueObject<FakeValueObject>
     {
         public int X { get; }
 

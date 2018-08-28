@@ -108,7 +108,7 @@ namespace Automagic.DomainModels.Core.Tests
         }
     }
 
-    public class FakeMeasurement : Measurement
+    public sealed class FakeMeasurement : Measurement
     {
         public FakeMeasurement(decimal value, Unit unit) : base(value, unit)
         {

@@ -126,7 +126,7 @@ namespace Automagic.DomainModels.Core.Tests
         }
     }
 
-    public class FakeText : Text
+    public sealed class FakeText : Text
     {
         public FakeText(string value) : base(value)
         {

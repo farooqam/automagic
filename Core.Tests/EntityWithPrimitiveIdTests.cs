@@ -77,7 +77,7 @@ namespace Automagic.DomainModels.Core.Tests
 
     }
 
-    public class FakeEntityWithPrimitiveId : Entity<int>
+    public sealed class FakeEntityWithPrimitiveId : Entity<int>
     {
         public FakeEntityWithPrimitiveId(int id) : base(id)
         {

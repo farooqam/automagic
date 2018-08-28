@@ -109,7 +109,7 @@ namespace Automagic.DomainModels.Core.Tests
         }
     }
 
-    public class FakeMoney: Money
+    public sealed class FakeMoney: Money
     {
         public FakeMoney(decimal amount, Currency currency) : base(amount, currency)
         {

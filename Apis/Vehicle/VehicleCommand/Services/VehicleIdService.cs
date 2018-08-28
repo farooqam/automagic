@@ -5,7 +5,7 @@ using Automagic.Apis.Vehicle.VehicleCommand.Models;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Services
 {
-    public class VehicleIdService : IVehicleIdService
+    public sealed class VehicleIdService : IVehicleIdService
     {
         private readonly SHA256 _sha256 = SHA256.Create();
         private readonly Encoding _encoding = Encoding.UTF8;

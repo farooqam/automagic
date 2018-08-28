@@ -78,7 +78,7 @@ namespace Automagic.DomainModels.Core.Tests
 
     }
     
-    public class FakeEntityWithComplexId : Entity<FakeId>
+    public sealed class FakeEntityWithComplexId : Entity<FakeId>
     {
         public FakeEntityWithComplexId(FakeId id) : base(id)
         {
@@ -95,7 +95,7 @@ namespace Automagic.DomainModels.Core.Tests
         }
     }
 
-    public class FakeId : ValueObject<FakeId>
+    public sealed class FakeId : ValueObject<FakeId>
     {
         public DateTime Value { get; }
 
