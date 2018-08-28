@@ -1,26 +1,32 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Automagic.Apis.Vehicle.VehicleCommand.Models;
+using Automagic.Apis.Vehicle.VehicleCommand.Services;
 using Automagic.Core.Api.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
 using Xunit;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 {
-    public class VehicleControllerTests : ApiTestClassFixture<Startup>
+    public class VehicleControllerTests : ApiTestClassFixture<VehicleCommandTestWebApplicationFactory<Startup>, Startup>
     {
 
-        public VehicleControllerTests(WebApplicationFactory<Startup> factory) : base(factory)
+        public VehicleControllerTests(VehicleCommandTestWebApplicationFactory<Startup> factory) : base(factory)
         {
         }
 
         [Fact]
         public async Task AddVehicle_ReturnsResponseModel()
         {
+            
             // Arrange
             var expectedVehicleId = "123";
+            Factory.SetupMockDataService = mock => mock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>())).ReturnsAsync(new AddVehicleResponse {VehicleId = "123"});
 
             // Act and Assert
             await Post(
@@ -159,6 +165,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
         public async Task AddVehicle_WhenTrimNotSpecified_ReturnsOk(string trim)
         {
             // Arrange
+            Factory.SetupMockDataService = mock => mock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>())).ReturnsAsync(new AddVehicleResponse { VehicleId = "123" });
 
             // Act & Assert
             await Post(

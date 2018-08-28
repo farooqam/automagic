@@ -11,9 +11,9 @@ using Xunit;
 
 namespace Automagic.Core.Api.Tests
 {
-    public class ApiTestClassFixture<TStartup> : IClassFixture<WebApplicationFactory<TStartup>> where TStartup : class
+    public class ApiTestClassFixture<TFactory, TStartup> : IClassFixture<TFactory> where TFactory : WebApplicationFactory<TStartup> where TStartup : class
     {
-        protected WebApplicationFactory<TStartup> Factory { get; }
+        protected TFactory Factory { get; }
 
         private readonly JsonMediaTypeFormatter _formatter = new JsonMediaTypeFormatter
         {
@@ -24,7 +24,7 @@ namespace Automagic.Core.Api.Tests
         };
 
 
-        protected ApiTestClassFixture(WebApplicationFactory<TStartup> factory)
+        protected ApiTestClassFixture(TFactory factory)
         {
             Factory = factory;
         }
