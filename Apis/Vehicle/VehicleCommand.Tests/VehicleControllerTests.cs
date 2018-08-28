@@ -27,10 +27,10 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
 
             var dataServiceMock = new Mock<IVehicleDataService>();
             dataServiceMock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
-                .ReturnsAsync(new AddVehicleResponse { VehicleId = "123" });
+                .ReturnsAsync(new AddVehicleResponse { VehicleId = expectedVehicleId });
 
             var idServiceMock = new Mock<IVehicleIdService>();
-            idServiceMock.Setup(m => m.NewId(It.IsAny<AddVehicleRequest>())).ReturnsAsync("id");
+            idServiceMock.Setup(m => m.NewId(It.IsAny<AddVehicleRequest>())).ReturnsAsync(expectedVehicleId);
 
             // Act and Assert
             await Post(
