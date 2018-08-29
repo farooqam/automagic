@@ -5,6 +5,6 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Services
 {
     public interface IVehicleDataService
     {
-        Task<AddVehicleResponse> SaveVehicle(string vehicleId, AddVehicleRequest request);
+        Task<AddVehicleResponse> SaveVehicleAsync(string vehicleId, AddVehicleRequest request);
     }
 }

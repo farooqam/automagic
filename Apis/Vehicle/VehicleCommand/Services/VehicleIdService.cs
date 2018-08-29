@@ -10,7 +10,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Services
         private readonly SHA256 _sha256 = SHA256.Create();
         private readonly Encoding _encoding = Encoding.UTF8;
 
-        public Task<string> NewId(AddVehicleRequest request)
+        public Task<string> NewIdAsync(AddVehicleRequest request)
         {
             var hash = _sha256.ComputeHash(_encoding.GetBytes(request.Vin));
             return Task.FromResult(AsString(hash));

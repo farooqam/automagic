@@ -8,7 +8,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests
     {
         public MockVehicleDataService()
         {
-            Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
+            Setup(m => m.SaveVehicleAsync(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
                 .ReturnsAsync(new AddVehicleResponse());
         }
     }

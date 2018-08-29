@@ -57,8 +57,8 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
                 return BadRequest(ModelState.GetModelErrors());
             }
 
-            var vehicleId = await _vehicleIdService.NewId(request);
-            var response = await _vehicleDataService.SaveVehicle(vehicleId, request);
+            var vehicleId = await _vehicleIdService.NewIdAsync(request);
+            var response = await _vehicleDataService.SaveVehicleAsync(vehicleId, request);
             return Ok(response);
         }
     }

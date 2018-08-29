@@ -26,7 +26,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
             var expectedVehicleId = "123";
 
             var dataServiceMock = new Mock<IVehicleDataService>();
-            dataServiceMock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
+            dataServiceMock.Setup(m => m.SaveVehicleAsync(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
                 .ReturnsAsync(new AddVehicleResponse { VehicleId = expectedVehicleId });
 
             // Act and Assert
@@ -36,7 +36,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
                 response =>
                 {
                     response.AssertStatusCode(HttpStatusCode.OK);
-                    var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
+                    var responseModel = response.GetResponseModelAsync<AddVehicleResponse>().Result;
                     responseModel.VehicleId.Should().Be(expectedVehicleId);
                 },
                 AssertNotRun,
@@ -54,7 +54,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
             var expectedVehicleId = "123";
 
             var dataServiceMock = new Mock<IVehicleDataService>();
-            dataServiceMock.Setup(m => m.SaveVehicle(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
+            dataServiceMock.Setup(m => m.SaveVehicleAsync(It.IsAny<string>(), It.IsAny<AddVehicleRequest>()))
                 .ReturnsAsync(new AddVehicleResponse { VehicleId = expectedVehicleId });
 
             // Act and Assert
@@ -64,7 +64,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
                 response =>
                 {
                     response.AssertStatusCode(HttpStatusCode.OK);
-                    var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
+                    var responseModel = response.GetResponseModelAsync<AddVehicleResponse>().Result;
                     responseModel.SelfLink.Should().Be($"api/v1/vehicles/{responseModel.VehicleId}");
                 },
                 AssertNotRun,

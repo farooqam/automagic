@@ -10,7 +10,7 @@ namespace Automagic.Core.Api.Tests
 {
     public static class ApiTestExtensions
     {
-        public static async Task<IList<ModelError>> GetModelErrors(this HttpResponseMessage response)
+        public static async Task<IList<ModelError>> GetModelErrorsAsync(this HttpResponseMessage response)
         {
             return (await response.Content.ReadAsAsync<IEnumerable<ModelError>>()).ToList();
         }
@@ -20,7 +20,7 @@ namespace Automagic.Core.Api.Tests
             response.StatusCode.Should().Be(expectedStatusCode);
         }
 
-        public static async Task<T> GetResponseModel<T>(this HttpResponseMessage response) where T : class
+        public static async Task<T> GetResponseModelAsync<T>(this HttpResponseMessage response) where T : class
         {
             return await response.Content.ReadAsAsync<T>();
         }
@@ -28,7 +28,7 @@ namespace Automagic.Core.Api.Tests
         public static void AssertErrorExists(this HttpResponseMessage response, string key, string message)
         {
             response.AssertStatusCode(HttpStatusCode.BadRequest);
-            var errors = response.GetModelErrors().Result;
+            var errors = response.GetModelErrorsAsync().Result;
             errors.Should().Contain(new ModelError(key, message));
         }
     }

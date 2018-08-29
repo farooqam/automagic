@@ -5,6 +5,6 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Services
 {
     public interface IVehicleIdService
     {
-        Task<string> NewId(AddVehicleRequest request);
+        Task<string> NewIdAsync(AddVehicleRequest request);
     }
 }

@@ -16,7 +16,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Services
             var request = new AddVehicleRequest { Vin = "ABC1234" };
 
             // Act
-            var id = await service.NewId(request);
+            var id = await service.NewIdAsync(request);
 
             // Assert
             id.Should().Be("979AE4C32C826F265C49C0B17432FFB18C1BCCABC79CEDE66A99984403FC4AE4");
