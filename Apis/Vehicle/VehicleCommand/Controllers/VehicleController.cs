@@ -21,32 +21,32 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
             _vehicleIdService = vehicleIdService;
         }
 
-    /// <summary>
-    /// Adds a Vehicle to the tenant.
-    /// </summary>
-    /// <remarks>
-    ///Sample request:
-    ///
-    ///     POST /api/v1/vehicle
-    ///     {
-    ///         "type": 1,
-    ///         "vin": "AAAAAAAAAAAAAAAAA",
-    ///         "year": 2016,
-    ///         "make": "Honda",
-    ///         "model": "Accord",
-    ///         "trim": "EX",
-    ///         "price": 29995,
-    ///         "odometer": 12,
-    ///         "odometerUnit": "miles"
-    ///     }
-    ///        
-    ///     
-    /// </remarks>
-    /// <param name="request"></param>
-    /// <returns>The added vehicle's id and self link.</returns>
-    /// <response code="200">Returns the added vehicle.</response>
-    /// <response code="400">The request failed validation.</response>
-    [Route("")]
+        /// <summary>
+        /// Adds a Vehicle to the tenant.
+        /// </summary>
+        /// <remarks>
+        ///Sample request:
+        ///
+        ///     POST /api/v1/vehicle
+        ///     {
+        ///         "type": 1,
+        ///         "vin": "AAAAAAAAAAAAAAAAA",
+        ///         "year": 2016,
+        ///         "make": "Honda",
+        ///         "model": "Accord",
+        ///         "trim": "EX",
+        ///         "price": 29995,
+        ///         "odometer": 12,
+        ///         "odometerUnit": "miles"
+        ///     }
+        ///        
+        ///     
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns>The added vehicle's id and self link.</returns>
+        /// <response code="200">Returns the added vehicle.</response>
+        /// <response code="400">The request failed validation.</response>
+        [Route("")]
         [HttpPost]
         [ProducesResponseType(typeof(AddVehicleResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(IEnumerable<ModelError>))]
