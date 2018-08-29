@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Automagic.Apis.Vehicle.VehicleCommand.Controllers
 {
-    [Route("api/v1.0/vehicle")]
+    [Route("api/v1/vehicle")]
     [Produces("application/json")]
     public sealed class VehicleController : Controller
     {

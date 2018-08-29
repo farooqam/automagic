@@ -6,6 +6,6 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Models
     {
         public string  VehicleId { get; set; }
 
-        public string SelfLink => $"api/v1.0/vehicles/{VehicleId}";
+        public string SelfLink => $"api/v1/vehicles/{VehicleId}";
     }
 }

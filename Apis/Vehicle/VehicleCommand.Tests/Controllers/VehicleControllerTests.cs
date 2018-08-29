@@ -31,7 +31,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act and Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest(),
                 response =>
                 {
@@ -59,13 +59,13 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act and Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest(),
                 response =>
                 {
                     response.AssertStatusCode(HttpStatusCode.OK);
                     var responseModel = response.GetResponseModel<AddVehicleResponse>().Result;
-                    responseModel.SelfLink.Should().Be($"api/v1.0/vehicles/{responseModel.VehicleId}");
+                    responseModel.SelfLink.Should().Be($"api/v1/vehicles/{responseModel.VehicleId}");
                 },
                 AssertNotRun,
                 services =>
@@ -81,7 +81,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 null as AddVehicleRequest,
                 AssertNotRun,
                 response => { response.AssertErrorExists(string.Empty, "A non-empty request body is required."); },
@@ -102,7 +102,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Vin", "Specify a vin."); },
@@ -122,7 +122,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateVin(vin),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Vin", "A valid VIN is 17 characters in length."); },
@@ -139,7 +139,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear(1980),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); },
@@ -156,7 +156,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateYear((short)(DateTime.Today.Year + 2)),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Year", $"Year must be between 1981 and {DateTime.Today.Year + 1}"); },
@@ -173,7 +173,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateType(VehicleType.NotSpecified),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Type", "Specify the vehicle type."); },
@@ -193,7 +193,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateMake(make),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Make", "Specify a make."); },
@@ -213,7 +213,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateModel(model),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Model", "Specify a model."); },
@@ -233,7 +233,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
             
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateTrim(trim),
                 response => {response.AssertStatusCode(HttpStatusCode.OK);},
                 AssertNotRun,
@@ -252,7 +252,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdatePrice(price),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Price", "Price must be greater than zero."); },
@@ -270,7 +270,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateOdometer(odometer),
                 AssertNotRun,
                 response => { response.AssertErrorExists("Odometer", "Odometer cannot be less than zero."); },
@@ -287,7 +287,7 @@ namespace Automagic.Apis.Vehicle.VehicleCommand.Tests.Controllers
 
             // Act & Assert
             await Post(
-                "api/v1.0/vehicle",
+                "api/v1/vehicle",
                 CreateDefaultAddVehicleRequest().UpdateOdometerUnit(Unit.NotSpecified),
                 AssertNotRun,
                 response => { response.AssertErrorExists("OdometerUnit", "Specify the odometer unit."); },
